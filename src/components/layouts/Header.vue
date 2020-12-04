@@ -16,7 +16,7 @@ export default {
 
 <style scoped>
   .header {
-    background: #333;
+    background: rgb(105, 3, 3);
     color: #fff;
     text-align: center;
     padding: 5px;

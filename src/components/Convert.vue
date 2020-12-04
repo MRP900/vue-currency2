@@ -1,22 +1,22 @@
 <template>
     <div>
-        <form @submit="convert">
+        <form id="currency-form" @submit="convert">
+        <!-- <form id="currency-form" v-on:change="convert"> -->
             <fieldset>
-                <legend>Money to Money</legend>
                 <div id="fields">
-                    <input type="text" v-model="money" placeholder="Amount to Convert"><br>
+                    <input id="currency-in" type="text" v-model="money" placeholder="Amount to Convert"><br>
                         <div id="selectors">
-                            <select id="dropDown1" v-model="convertFrom">
+                            <select id="dropDown1" v-model="convertFrom" v-on:change="convert">
                                 <option value="Convert From" convertFrom>Convert From</option>
                                 <option v-for="rate in rates" v-bind:key="rate.id">
-                                    {{ rate.abb }}
+                                    {{ rate.abb }} - {{rate.name}}
                                 </option> 
                             </select>
                             <br>
-                            <select id="dropDown2" v-model="convertTo">
-                                <option value="Convert to" convertTo>Convert to</option>
+                            <select id="dropDown2" v-model="convertTo" v-on:change="convert">
+                                <option value="Convert To" convertTo>Convert To</option>
                                 <option v-for="(item, index) in rates" v-bind:key=index+1>
-                                    {{ item.abb }}
+                                    {{ item.abb }} - {{ item.name }}
                                 </option> 
                             </select>
                         </div>
@@ -40,16 +40,13 @@ export default {
         return {
             money : "",
             convertFrom: "Convert From",
-            convertTo : "Convert to"
+            convertTo : "Convert To"
         }
     },
     methods: {
         convert(e) {
             e.preventDefault();
-            if (!isNaN(this.money) && (this.money.length > 0) && (this.convertTo != "Convert to") && (this.convertFrom != "Convert From")) {
-                // console.log("Money: " + this.money);
-                // console.log("From: " + this.convertFrom);
-                // console.log("To: " + this.convertTo);
+            if (!isNaN(this.money) & (this.money.length > 0) & (this.convertTo != "Convert to") & (this.convertFrom != "Convert From")) {
                 this.$emit('new-convert', this.money, this.convertFrom, this.convertTo);
             }
         },
@@ -69,26 +66,34 @@ export default {
         font-weight: bold;
         text-align: left;
     }
-    form {
+    #currency-form {
         width: 40%;
-        margin: 2.5em auto;
+        margin: 1em auto;
+        /* display: flex; */
+        
     }
 
     #fields input, input {
-        margin: .25em 0;
+        margin: .25em 1em;
     }
     #buttons {
         margin: 0 auto;
-        width: 25%;
+        width: 75%;
     }
     #buttons input {
         margin-right: .4em;
     }
-    /* #selectors {
-        width: 90%;
-        margin: .5em auto;
-    } */
+    #selectors {
+        width: 100%;
+        margin: .25em auto;
+    }
     #dropDown1, #dropDown2 {
         margin: .4em auto;
     }
+    select {
+        width: 95%;
+    }
+    /* #currency-in {
+
+    } */
 </style>

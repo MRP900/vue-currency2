@@ -5,8 +5,8 @@
 		<table id="results" v-if="conversions.length > 0">
 			<thead>
 				<tr>
-					<th>Amount / Converted From</th>
-					<th>Amount / Converted to</th>
+					<th>Input</th>
+					<th>Output</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -23,7 +23,8 @@
 import axios from 'axios';
 import Convert from '../components/Convert';
 import * as data from '../api.json';
-import * as countries from '../countries.json';
+// import * as countries from '../countries.json';
+import * as currencies from '../currencies.json';
 const apiKey = data.default.key;
 export default {
 	name: 'Home',
@@ -31,7 +32,10 @@ export default {
 		Convert
 	},
 	methods: {
-		convertUSD(money, rateFrom, rateTo) {		
+		convertUSD(money, rateFrom, rateTo) {
+			rateFrom = rateFrom.slice(0,3);
+			rateTo = rateTo.slice(0,3);
+			console.log(`RateFrom: ${rateFrom}   RateTo: ${rateTo}`);	
 			this.converted = money / this.apiResult.rates[rateFrom];
 			
 			if (rateTo != 'EUR') {
@@ -68,35 +72,46 @@ export default {
 			// abbreviations
 			abb : [],
 			rates : [],
-			cleanData : [],
 			conversions: [],
-			countryData: {},
+			
+			names: [],
+			cleanData: []
 		}
 	},
 	// Get API Data
 	created() {
 		axios.get('http://data.fixer.io/api/latest?access_key='+apiKey).then(res => {
-		this.countryData = countries;
+		
+		// Get singular currency name from countryData
+		// console.log(res.data.rates);
 		this.apiResult = res.data;
+		// console.log(this.apiResult);
 		// Store abbreviations in array
 		this.abb = Object.keys(this.apiResult.rates);
+		// console.log(this.abb);
 		// Store rates in array
 		this.rates = Object.values(this.apiResult.rates);
-		// Create new object with id and abbreviation
+		// Create new object with id and abbreviation add to array passed to form
 		let id = 0;
 		this.abb.forEach(element => {
 			id++;
-			let obj = {
+			let country = {
 			id: id,
 			abb: element,
 			}
-			this.cleanData.push(obj);
+			if (currencies.default[element] !== undefined) {
+				country['name'] = currencies.default[element];
+			}
+			if (res.data.rates[element] !== undefined) {
+				country['rate'] =res.data.rates[element];
+			}
+			this.cleanData.push(country);
 		});
-			
-			// symbol: symbolShort
 		console.log(this.cleanData);
+
 	});
-}
+		
+	}
 }
 
 </script>
