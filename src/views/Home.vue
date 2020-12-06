@@ -87,14 +87,14 @@ export default {
 		axios.get('http://data.fixer.io/api/latest?access_key='+apiKey).then(res => {
 		
 		// Get singular currency name from countryData
-		// console.log(res.data.rates);
 		this.apiResult = res.data;
-		// console.log(this.apiResult);
+		
 		// Store abbreviations in array
 		this.abb = Object.keys(this.apiResult.rates);
-		// console.log(this.abb);
+		
 		// Store rates in array
 		this.rates = Object.values(this.apiResult.rates);
+		
 		// Create new object with id and abbreviation add to array passed to form
 		let id = 0;
 		this.abb.forEach(element => {
@@ -111,7 +111,6 @@ export default {
 			}
 			this.cleanData.push(country);
 		});
-		// console.log(this.cleanData);
 
 	});
 		
@@ -124,13 +123,11 @@ export default {
 
 #results {
 	margin: 1em auto;
-	width: 60%;
-	
+	width: 60%;	
 }
+
 th, td {
 	padding: .5em;
 }
-/* table {
-	border: 1px solid black;
-} */
+
 </style>

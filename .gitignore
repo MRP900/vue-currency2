@@ -24,3 +24,4 @@ pnpm-debug.log*
 
 api.json
 countries.json
+src/api.json
