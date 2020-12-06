@@ -2,7 +2,7 @@
 	<div id="app">
 		<Header />
 		<Convert v-on:new-convert="convertUSD" v-on:clear-out="clearOut" v-bind:rates="this.cleanData" />
-		<table id="results" v-if="conversions.length > 0">
+		<table id="results" v-if="conversions.length > 0" class="table table-dark table-striped table-bordered">
 			<thead>
 				<tr>
 					<th>Input</th>
@@ -35,13 +35,17 @@ export default {
 		convertUSD(money, rateFrom, rateTo) {
 			rateFrom = rateFrom.slice(0,3);
 			rateTo = rateTo.slice(0,3);
-			console.log(`RateFrom: ${rateFrom}   RateTo: ${rateTo}`);	
+			// console.log(`RateFrom: ${rateFrom}   RateTo: ${rateTo}`);	
+			// Convert 'from' to Euro by dividing by exchange rate
 			this.converted = money / this.apiResult.rates[rateFrom];
 			
+			// If not converting to Euro mutliply by target rate
 			if (rateTo != 'EUR') {
 				this.converted *= this.apiResult.rates[rateTo];	
 			}
-			this.converted = this.converted.toFixed(2);
+			// Round final results
+			this.converted = this.converted.toFixed(3);
+			// Prepare object to hold results
 			let obj = {}
 			obj = {
 				id: this.conversions.length,
@@ -107,7 +111,7 @@ export default {
 			}
 			this.cleanData.push(country);
 		});
-		console.log(this.cleanData);
+		// console.log(this.cleanData);
 
 	});
 		
@@ -126,7 +130,7 @@ export default {
 th, td {
 	padding: .5em;
 }
-table {
+/* table {
 	border: 1px solid black;
-}
+} */
 </style>

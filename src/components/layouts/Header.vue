@@ -1,8 +1,8 @@
 <template>
   <header class="header">
-    <h3 id="title">Currency Converter</h3>
+    <h4 id="title">Currency Converter</h4>
     <div id="nav">
-      <router-link to="/">Home</router-link> | 
+      <router-link to="/">Home</router-link><span id="pipe">|</span> 
       <router-link to="/about">About</router-link>
     </div>
   </header>
@@ -16,7 +16,7 @@ export default {
 
 <style scoped>
   .header {
-    background: rgb(105, 3, 3);
+    background: rgb(134, 102, 102);
     color: #fff;
     text-align: center;
     padding: 5px;
@@ -30,14 +30,31 @@ export default {
   }
 
   #title {
-    margin: .25em 0;
+    margin: .15em 0;
   }
 
-  /* #nav {
+  @media only screen and (max-width: 600px) {
+    
+    
+    #title {
+      margin: .1em auto;
+    }
+}
 
-  } */
-  /* .router-link-exact-active {
-      color: orange;
-      text-decoration: underline;
+@media only screen and (max-width: 400px) {
+#nav {
+      display: flex;
+      flex-direction: column;
+    }
+    #pipe{
+      display: none;
+    }
+    .header {
+      height: 8em;
+    }
+}
+
+  /* .router-link {
+      margin: .25em auto;
     } */
 </style>

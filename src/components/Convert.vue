@@ -1,8 +1,7 @@
 <template>
-    <div>
+    <div class="form-group">
         <form id="currency-form" @submit="convert">
         <!-- <form id="currency-form" v-on:change="convert"> -->
-            <fieldset>
                 <div id="fields">
                     <input id="currency-in" type="text" v-model="money" placeholder="Amount to Convert"><br>
                         <div id="selectors">
@@ -21,12 +20,10 @@
                             </select>
                         </div>
                 </div>
-                <div id="buttons">
-                    <input type ="submit" value="Convert" class="btn">
-                    <input type ="reset" @click="clearOut" value="Reset" class="btn">
+                <div id="buttons" class="">
+                    <input type ="submit" value="Convert" class="btn btn-primary">
+                    <input type ="reset" @click="clearOut" value="Reset" class="btn btn-danger">
                 </div>
-            </fieldset>
-            
         </form>
     </div>
 </template>
@@ -46,7 +43,7 @@ export default {
     methods: {
         convert(e) {
             e.preventDefault();
-            if (!isNaN(this.money) & (this.money.length > 0) & (this.convertTo != "Convert to") & (this.convertFrom != "Convert From")) {
+            if (!isNaN(this.money) & (this.money.length > 0) & (this.convertTo != "Convert To") & (this.convertFrom != "Convert From")) {
                 this.$emit('new-convert', this.money, this.convertFrom, this.convertTo);
             }
         },
@@ -67,10 +64,8 @@ export default {
         text-align: left;
     }
     #currency-form {
-        width: 40%;
+        width: 60%;
         margin: 1em auto;
-        /* display: flex; */
-        
     }
 
     #fields input, input {
@@ -93,7 +88,64 @@ export default {
     select {
         width: 95%;
     }
-    /* #currency-in {
 
+@media only screen and (max-width: 500px) {
+    #dropDown1, #dropDown2 {
+        margin: .4em 0;
+    }
+    select {
+        width: 75%;
+    }
+    #currency-form {
+        width: 90%;
+        margin: 1em auto;
+        /* display: flex; */
+        
+    }
+
+    /* #fields input, input {
+        margin: .25em 1em;
     } */
+}
+
+    @media only screen and (max-width: 500px) {
+    #dropDown1, #dropDown2 {
+        margin: .4em 0;
+    }
+    select {
+        width: 90%;
+    }
+    #currency-form {
+        width: 100%;
+        margin: 1em auto;
+        /* display: flex; */
+        
+    }
+
+    #fields input, input {
+        margin: .25em 0;
+    }
+}
+
+ @media only screen and (max-width: 390px) {
+    #dropDown1, #dropDown2 {
+        margin: .4em 0;
+    }
+    select {
+        width: 100%;
+    }
+    #currency-form {
+        width: 100%;
+        margin: 1em auto;
+        /* display: flex; */
+        
+    }
+
+    #fields input {
+        margin: .25em 0;
+    }
+    #currency-in {
+        width:100%;
+    }
+}
 </style>
